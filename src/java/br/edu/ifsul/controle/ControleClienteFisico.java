@@ -28,7 +28,7 @@ public class ControleClienteFisico implements Serializable{
     }
     
     public String listar() {
-        return "/privado/cliente_fisico/listar?faces-redirect=true";
+        return "/privado/clientefisico/listar?faces-redirect=true";
     }
     
     public String novo() {

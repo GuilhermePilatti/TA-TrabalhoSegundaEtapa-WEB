@@ -8,6 +8,7 @@ package br.edu.ifsul.dao;
 import br.edu.ifsul.modelo.ClienteFisico;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +16,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author ws
  */
+@Stateless
 public class ClienteFisicoDAO implements Serializable{
     @PersistenceContext(unitName = "TA-Trabalho-WebPU")
     private EntityManager em;
@@ -49,7 +51,7 @@ public class ClienteFisicoDAO implements Serializable{
     }
 
     public List<ClienteFisico> getListarTodos() {
-        return listarTodos;
+        return em.createQuery("FROM ClienteFisico ORDER BY nome").getResultList();
     }
 
     public void setListarTodos(List<ClienteFisico> listarTodos) {

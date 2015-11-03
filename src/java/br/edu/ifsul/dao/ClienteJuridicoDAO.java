@@ -8,6 +8,7 @@ package br.edu.ifsul.dao;
 import br.edu.ifsul.modelo.ClienteJuridico;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,6 +16,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author ws
  */
+@Stateless
 public class ClienteJuridicoDAO implements Serializable{
     @PersistenceContext(unitName = "TA-Trabalho-WebPU")
     private EntityManager em;
