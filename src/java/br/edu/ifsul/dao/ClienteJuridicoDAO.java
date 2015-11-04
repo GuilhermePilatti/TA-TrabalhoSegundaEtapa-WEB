@@ -51,7 +51,7 @@ public class ClienteJuridicoDAO implements Serializable{
     }
 
     public List<ClienteJuridico> getListarTodos() {
-        return listarTodos;
+        return em.createQuery("FROM ClienteJuridico ORDER BY nome").getResultList();
     }
 
     public void setListarTodos(List<ClienteJuridico> listarTodos) {

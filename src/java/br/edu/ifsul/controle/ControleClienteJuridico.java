@@ -28,7 +28,7 @@ public class ControleClienteJuridico implements Serializable{
     }
     
     public String listar() {
-        return "/privado/cliente_juridico/listar?faces-redirect=true";
+        return "/privado/clientejuridico/listar?faces-redirect=true";
     }
     
     public String novo() {
