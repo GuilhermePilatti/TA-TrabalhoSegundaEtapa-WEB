@@ -11,15 +11,15 @@
         </ui:define>
         
         <ui:define name="conteudo">
-            <h:form>
+            <h:form id="formListagem" prependId="false">
                 <p:growl/>
                 
                 <p:dataTable value="#{controleClienteFisico.dao.listarTodos}" var="obj"
                              emptyMessage="Vazio">
                     <f:facet name="header">
-                        <p:commandButton value="Novo"
-                                         action="#{controleClienteFisico.novo()}"
-                                         ajax="false"/>
+                        <p:commandButton value="Novo" actionListener="#{controleClienteFisico.novo()}"
+                                 update=":formEdicao" process="@form" 
+                                 oncomplete="PF('dlg').show();"/>
                         
                         <p:outputLabel value="Listagem de Clientes Físicos"/>
                     </f:facet>
@@ -55,8 +55,8 @@
                     <p:column headerText="Ações">
                         <p:commandButton icon="ui-icon-pencil"
                                          action="#{controleClienteFisico.editar(obj.codigo)}"
-                                         ajax="false"/>
-                        
+                                             oncomplete="PF('dlg').show()" update=":formEdicao" process="@form"/>
+                            
                         <p:commandButton icon="ui-icon-trash"
                                          action="#{controleClienteFisico.excluir(obj.codigo)}"
                                          update="@form" process="@form"
@@ -64,6 +64,49 @@
                     </p:column>
                 </p:dataTable>
             </h:form>
+        </ui:define>
+        
+        <ui:define name="dialogo">
+            <p:dialog header="Edição" widgetVar="dlg" resizable="false" modal="true">
+                <h:form id="formEdicao" prependId="false">
+                    <p:growl id="growl"/>
+                    
+                    <p:panelGrid columns="2">
+                        <f:facet name="footer">
+                            <div align="center">
+                                <p:commandButton actionListener="#{controleClienteFisico.salvar()}"
+                                                 update=":formListagem :formEdicao"
+                                                 value="Salvar" icon="ui-icon-disk"
+                                                 oncomplete="if(!args.validationFailed){ PF('dlg').hide(); }"/>
+                            </div>
+                        </f:facet>
+                        
+                        <p:outputLabel value="Código"/>
+                        <p:inputText value="#{controleClienteFisico.objeto.codigo}" readonly="true"
+                                     size="5"/>
+                        
+                        <p:outputLabel value="Nome" for="txtNome"/>
+                        <p:inputText value="#{controleClienteFisico.objeto.nome}" size="50"
+                                     maxlength="50" id="txtNome" placeholder="Obrigatório"/>
+                        
+                        <p:outputLabel value="Endereço" for="txtEndereco"/>
+                        <p:inputText value="#{controleClienteFisico.objeto.endereco}" size="50"
+                                     maxlength="50" id="txtEndereco" placeholder="Obrigatório"/>
+                        
+                        <p:outputLabel value="Cidade" for="txtCidade"/>
+                        <p:inputText value="#{controleClienteFisico.objeto.cidade}" size="50"
+                                     maxlength="50" id="txtCidade" placeholder="Obrigatório"/>
+                        
+                        <p:outputLabel value="CPF" for="txtCPF"/>
+                        <p:inputText value="#{controleClienteFisico.objeto.cpf}" size="14"
+                                     maxlength="14" id="txtCPF" placeholder="Obrigatório"/>
+                        
+                        <p:outputLabel value="RG" for="txtRG"/>
+                        <p:inputText value="#{controleClienteFisico.objeto.rg}" size="10"
+                                     maxlength="10" id="txtRG" placeholder="Obrigatório"/>
+                    </p:panelGrid>
+                </h:form>
+            </p:dialog>
         </ui:define>
     </ui:composition>
 </html>

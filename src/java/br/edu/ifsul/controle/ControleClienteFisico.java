@@ -31,12 +31,11 @@ public class ControleClienteFisico implements Serializable{
         return "/privado/clientefisico/listar?faces-redirect=true";
     }
     
-    public String novo() {
+    public void novo() {
         objeto = new ClienteFisico();
-        return "formulario?faces-redirect=true";
     }
     
-    public String salvar() {
+    public void salvar() {
         try{
             if(objeto.getCodigo()== null){
                 dao.persist(objeto);
@@ -44,25 +43,16 @@ public class ControleClienteFisico implements Serializable{
                 dao.merge(objeto);
             }
             Util.mensagemInformacao("Objeto persistido com sucesso!");
-            return "listar?faces-redirect=true";
         } catch(Exception e){
             Util.mensagemErro("Erro ao persistir objeto "+e.getMessage());
-            return "formulario?faces-redirect=true";
         }
     }
     
-    public String cancelar() {
-        objeto = null;
-        return "listar?faces-redirect=true";
-    }
-    
-    public String editar(Integer id) {
+    public void editar(Integer id) {
         try {
             objeto = dao.getObjectById(id);
-            return "formulario?faces-redirect=true";
         } catch (Exception e) {
             Util.mensagemErro("Erro ao recuperar objeto "+Util.getMessageErro(e));
-            return "listar?faces-redirect=true";
         }
     }
     

@@ -5,8 +5,9 @@
  */
 package br.edu.ifsul.controle;
 
-import br.edu.ifsul.dao.ClienteJuridicoDAO;
-import br.edu.ifsul.modelo.ClienteJuridico;
+import br.edu.ifsul.dao.FornecedorDAO;
+import br.edu.ifsul.dao.MateriaPrimaDAO;
+import br.edu.ifsul.modelo.MateriaPrima;
 import br.edu.ifsul.utils.Util;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -17,27 +18,30 @@ import javax.faces.bean.SessionScoped;
  *
  * @author ws
  */
-@ManagedBean(name = "controleClienteJuridico")
+@ManagedBean(name = "controleMateriaPrima")
 @SessionScoped
-public class ControleClienteJuridico implements Serializable{
+public class ControleMateriaPrima implements Serializable{
     @EJB
-    private ClienteJuridicoDAO dao;
-    private ClienteJuridico objeto;
+    private MateriaPrimaDAO dao;
+    private MateriaPrima objeto;
+    
+    @EJB
+    private FornecedorDAO daoFornecedor;
 
-    public ControleClienteJuridico() {
+    public ControleMateriaPrima() {
     }
     
     public String listar() {
-        return "/privado/clientejuridico/listar?faces-redirect=true";
+        return "/privado/materiaprima/listar?faces-redirect=true";
     }
     
     public void novo() {
-        objeto = new ClienteJuridico();
+        objeto = new MateriaPrima();
     }
     
     public void salvar() {
         try{
-            if(objeto.getCodigo() == null){
+            if(objeto.getCodigo()== null){
                 dao.persist(objeto);
             } else{
                 dao.merge(objeto);
@@ -50,6 +54,7 @@ public class ControleClienteJuridico implements Serializable{
     
     public void editar(Integer id) {
         try {
+//            Util.mensagemErro(id.toString());
             objeto = dao.getObjectById(id);
         } catch (Exception e) {
             Util.mensagemErro("Erro ao recuperar objeto "+Util.getMessageErro(e));
@@ -66,19 +71,27 @@ public class ControleClienteJuridico implements Serializable{
         }
     }
 
-    public ClienteJuridicoDAO getDao() {
+    public MateriaPrimaDAO getDao() {
         return dao;
     }
 
-    public void setDao(ClienteJuridicoDAO dao) {
+    public void setDao(MateriaPrimaDAO dao) {
         this.dao = dao;
     }
 
-    public ClienteJuridico getObjeto() {
+    public MateriaPrima getObjeto() {
         return objeto;
     }
 
-    public void setObjeto(ClienteJuridico objeto) {
+    public void setObjeto(MateriaPrima objeto) {
         this.objeto = objeto;
+    }
+
+    public FornecedorDAO getDaoFornecedor() {
+        return daoFornecedor;
+    }
+
+    public void setDaoFornecedor(FornecedorDAO daoFornecedor) {
+        this.daoFornecedor = daoFornecedor;
     }
 }
