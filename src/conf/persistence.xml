@@ -3,12 +3,14 @@
   <persistence-unit name="TA-Trabalho-WebPU" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>jdbc/TA-Trabalho</jta-data-source>
-    <class>br.edu.ifsul.modelo.Fornecedor</class>
+    <class>br.edu.ifsul.modelo.Cliente</class>
     <class>br.edu.ifsul.modelo.ClienteFisico</class>
     <class>br.edu.ifsul.modelo.ClienteJuridico</class>
-
+    <class>br.edu.ifsul.modelo.Fornecedor</class>
+    <class>br.edu.ifsul.modelo.ItensProduto</class>
+    <class>br.edu.ifsul.modelo.MateriaPrima</class>
+    <class>br.edu.ifsul.modelo.Produto</class>
     
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
