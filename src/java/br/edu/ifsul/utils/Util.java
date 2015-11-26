@@ -32,6 +32,10 @@ public class Util {
         if (erro.contains("operador não existe")) {
             erro = "Erro de operador!";
         }
+        
+        if (erro.contains("viola restrição de chave estrangeira")){
+            erro = "Registro não pode ser excluido pois possui referencias em outros locais";
+        }
         return erro;
     }
 }

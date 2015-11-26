@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">
+            Manutenção de Vendas
+        </ui:define>
+        
+        <ui:define name="conteudo">
+            <h:form id="formListagem" prependId="false">
+                <p:growl/>
+
+                <p:commandButton actionListener="#{controleVenda.novo()}" value="Nova Venda"
+                                 oncomplete="PF('dlg').show();" update=":formEdicao"/>
+
+                <p:dataTable value="#{controleVenda.dao.listarTodos}" var="obj">
+                    <f:facet name="header">
+                        <p:outputLabel value="Listagem de Vendas"/>
+                    </f:facet>
+
+                    <f:facet name="footer">
+                        <p:outputLabel value="Total de Registros: #{controleVenda.dao.listarTodos.size()}"/> 
+                    </f:facet>
+
+                    <p:column headerText="Código">
+                        <div align="center">
+                            <p:outputLabel value="#{obj.codigo}"/>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Cliente">
+                        <div align="center">
+                            <p:outputLabel value="#{obj.pedido.cliente.nome}"/>
+                        </div>
+                    </p:column>
+                    
+                    <p:column headerText="Pedido">
+                        <div align="center">
+                            <p:outputLabel value="#{obj.pedido.codigo}"/>
+                        </div>
+                    </p:column>
+                    
+                    <p:column headerText="Data da venda">
+                        <div align="center">
+                            <p:outputLabel value="#{obj.dataVendaFormatada}"/>
+                        </div>
+                    </p:column>
+                    
+                    <p:column headerText="Data entrega">
+                        <div align="center">
+                            <p:outputLabel value="#{obj.dataEntregaFormatada}"/>
+                        </div>
+                    </p:column>
+                    
+                    <p:column headerText="Valor">
+                        <div align="center">
+                            <p:outputLabel value="#{obj.valorTotal}"/>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton icon="ui-icon-pencil"
+                                             id="btnAlterar" actionListener="#{controleVenda.editar(obj.codigo)}"
+                                             oncomplete="PF('dlg').show();" update=":formEdicao"
+                                             process="@form"/>
+
+                            <p:commandButton icon="ui-icon-trash" actionListener="#{controleVenda.excluir(obj.codigo)}"
+                                             update=":formListagem" id="btnExcluir"
+                                             onclick="if(!confirm('Confirma a exclusão do objeto?')) return false"/>
+                        </div>
+
+                        <p:tooltip for="btnAlterar" value="Alterar"/>
+                        <p:tooltip for="btnExcluir" value="Excluir"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+        
+        <ui:define name="dialogo">
+            <p:dialog header="Edição de Vendas" widgetVar="dlg" resizable="false"
+                modal="true">
+                <h:form id="formEdicao" prependId="false">
+                    <p:growl/>
+
+                    <p:panelGrid columns="2">
+                        <f:facet name="footer">
+                            <div align="center">
+                                <p:commandButton value="Salvar" icon="ui-icon-disk"
+                                                 actionListener="#{controleVenda.salvar()}"
+                                                 update=":formListagem :formEdicao"
+                                                 oncomplete="if(!args.validationFailed){PF('dlg').hide();}"/>
+                            </div>
+                        </f:facet>
+
+                        <p:outputLabel value="Código"/>
+                        <p:inputText value="#{controleVenda.objeto.codigo}" readonly="true" size="5"/>
+
+                        <p:outputLabel value="Pedido" for="selectPedido"/>
+                        <p:selectOneMenu id="selectPedido" value="#{controleVenda.objeto.pedido}">
+                            <f:converter converterId="converterPedido"/>
+                            
+                            <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
+                            
+                            <f:selectItems value="#{controleVenda.daoPedido.listarTodos}"
+                                           var="p" itemLabel="#{p.pedidoVendas}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Data do venda" for="txtDataVenda"/>
+                        <p:calendar value="#{controleVenda.objeto.dataVenda}"
+                                                id="txtDataVenda"
+                                                mask="true" pattern="dd/MM/yyyy" navigator="true">
+                            <f:converter converterId="converterCalendar"/>
+                        </p:calendar>
+                        
+                        <p:outputLabel value="Data do entrega" for="txtDataEntrega"/>
+                        <p:calendar value="#{controleVenda.objeto.dataEntrega}"
+                                                id="txtDataEntrega"
+                                                mask="true" pattern="dd/MM/yyyy" navigator="true">
+                            <f:converter converterId="converterCalendar"/>
+                        </p:calendar>
+                    </p:panelGrid>
+                </h:form>
+                
+                <ui:include src="/templates/ajaxstatus.xhtml"/>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

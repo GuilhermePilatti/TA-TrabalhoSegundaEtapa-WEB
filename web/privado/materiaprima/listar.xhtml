@@ -14,13 +14,13 @@
             <h:form id="formListagem" prependId="false">
                 <p:growl/>
                 
+                <p:commandButton value="Nova Matéria Prima" actionListener="#{controleMateriaPrima.novo()}"
+                                 update=":formEdicao" process="@form" 
+                                 oncomplete="PF('dlg').show();"/>
+                
                 <p:dataTable value="#{controleMateriaPrima.dao.listarTodos}" var="obj"
                              emptyMessage="Vazio">
                     <f:facet name="header">
-                        <p:commandButton value="Novo" actionListener="#{controleMateriaPrima.novo()}"
-                                 update=":formEdicao" process="@form" 
-                                 oncomplete="PF('dlg').show();"/>
-                        
                         <p:outputLabel value="Listagem de Matérias Primas"/>
                     </f:facet>
                     
@@ -29,15 +29,20 @@
                     </f:facet>
                     
                     <p:column headerText="Código">
-                        <p:outputLabel value="#{obj.codigo}"/>
+                        <div align="center">
+                            <p:outputLabel value="#{obj.codigo}"/>
+                        </div>
                     </p:column>
                     
                     <p:column headerText="Nome">
-                        <p:outputLabel value="#{obj.nome}"/>
+                        <div align="center">
+                            <p:outputLabel value="#{obj.nome}"/>
+                        </div>
                     </p:column>
                     
                     <p:column headerText="Ações">
-                        <p:commandButton icon="ui-icon-pencil"
+                        <div align="center">
+                            <p:commandButton icon="ui-icon-pencil"
                                          action="#{controleMateriaPrima.editar(obj.codigo)}"
                                              oncomplete="PF('dlg').show()" update=":formEdicao" process="@form"/>
                             
@@ -45,6 +50,7 @@
                                              action="#{controleMateriaPrima.excluir(obj.codigo)}"
                                              update="@form" process="@form"
                                              onclick="if (!confirm('Confirma a exclusão do objeto?')) return false"/>
+                        </div>
                     </p:column>
                 </p:dataTable>
             </h:form>

@@ -14,13 +14,13 @@
             <h:form id="formListagem" prependId="false">
                 <p:growl/>
                 
+                <p:commandButton value="Novo Cliente Físico" actionListener="#{controleClienteFisico.novo()}"
+                                 update=":formEdicao" process="@form" 
+                                 oncomplete="PF('dlg').show();"/>
+                
                 <p:dataTable value="#{controleClienteFisico.dao.listarTodos}" var="obj"
                              emptyMessage="Vazio">
                     <f:facet name="header">
-                        <p:commandButton value="Novo" actionListener="#{controleClienteFisico.novo()}"
-                                 update=":formEdicao" process="@form" 
-                                 oncomplete="PF('dlg').show();"/>
-                        
                         <p:outputLabel value="Listagem de Clientes Físicos"/>
                     </f:facet>
                     
@@ -29,22 +29,28 @@
                     </f:facet>
                     
                     <p:column headerText="Código">
-                        <p:outputLabel value="#{obj.codigo}"/>
+                        <div align="center">
+                            <p:outputLabel value="#{obj.codigo}"/>
+                        </div>
                     </p:column>
                     
                     <p:column headerText="Nome">
-                        <p:outputLabel value="#{obj.nome}"/>
+                        <div align="center">
+                            <p:outputLabel value="#{obj.nome}"/>
+                        </div>
                     </p:column>
                     
                     <p:column headerText="Ações">
-                        <p:commandButton icon="ui-icon-pencil"
+                        <div align="center">
+                            <p:commandButton icon="ui-icon-pencil"
                                          action="#{controleClienteFisico.editar(obj.codigo)}"
                                              oncomplete="PF('dlg').show()" update=":formEdicao" process="@form"/>
                             
-                        <p:commandButton icon="ui-icon-trash"
+                            <p:commandButton icon="ui-icon-trash"
                                          action="#{controleClienteFisico.excluir(obj.codigo)}"
                                          update="@form" process="@form"
                                          onclick="if (!confirm('Confirma a exclusão do objeto?')) return false"/>
+                        </div>
                     </p:column>
                 </p:dataTable>
             </h:form>
