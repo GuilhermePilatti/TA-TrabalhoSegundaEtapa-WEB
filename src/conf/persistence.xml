@@ -10,6 +10,9 @@
     <class>br.edu.ifsul.modelo.ItensProduto</class>
     <class>br.edu.ifsul.modelo.MateriaPrima</class>
     <class>br.edu.ifsul.modelo.Produto</class>
+    <class>br.edu.ifsul.modelo.ItensPedido</class>
+    <class>br.edu.ifsul.modelo.Pedido</class>
+    <class>br.edu.ifsul.modelo.Venda</class>
     
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
