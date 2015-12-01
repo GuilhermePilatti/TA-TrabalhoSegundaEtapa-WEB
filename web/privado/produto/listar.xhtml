@@ -22,6 +22,10 @@
                 
                 <p:dataTable value="#{controleProduto.dao.listarTodos}"
                              var="obj">
+                    <f:facet name="header">
+                        <p:outputLabel value="Listagem de Produtos"/>
+                    </f:facet>
+                    
                     <f:facet name="footer">
                         <div align="center">
                             <p:outputLabel value="Total de registros: #{controleProduto.dao.listarTodos.size()}"/>
